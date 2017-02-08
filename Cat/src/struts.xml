@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	<struts>
+		<!-- 防止出现中文乱码 -->
+		<constant name="struts.i18n.encoding" value="utf-8" />
+		<constant name="struts.ui.theme" value="simple"></constant>
+		
+		<package name="action" namespace="/" extends="json-default">
+			
+			<action name="users" class="com.action.UserAction" method="regist">
+            	<result name="success">/success.jsp</result>
+            </action>
+            
+            <action name="theme" class="com.action.OptionAction" method="saveOptions">
+            	<result name="success">/success.jsp</result>
+            </action>
+			
+			<action name="login" class="com.action.UserAction" method="checkUser">
+				<result name="SUCCESS" type="chain">showtheme</result>
+				<result name="DEFEAT">/index.jsp</result>
+			 </action>
+			
+			<!-- 处理请求 并 查询所有投票标题 -->
+			<action name="showtheme" class="com.action.ThemeAction" method="showTheme">
+				<result name="SUCCESS">/vote.jsp</result>
+				<result name="DEFEAT">/index.jsp</result>
+			</action>
+			
+			<!--处理请求 并 查询客户选择的标题的所有选项 -->
+			<action name="showoption" class="com.action.OptionAction" method="showOptions">
+				<result name="SUCCESS">/select.jsp</result>
+				<result name="DEFEAT">/index.jsp</result>
+			</action>
+			
+			<!--处理请求   进行投票并将票数在数据库中自增1 -->
+			<action name="vote" class="com.action.OptionAction" method="doVote">
+				<result name="SUCCESS">/result.jsp</result>
+			</action>
+			
+			<!--处理请求   将所有留言查询出来 -->
+			<action name="showmessage" class="com.action.MessageAction" method="showMessage">
+				<result name="SUCCESS" type="json"></result>
+			</action>
+			
+			<action name="addmessage" class="com.action.MessageAction" method="addMessage">
+				<result name="SUCCESS" type="json"></result>
+			</action>
+			
+		
+			<!-- <action name="showresult" class="com.action.OptionAction" method="getResult">
+				<result name="SUCCESS" >/result.jsp</result>
+			</action> -->
+			
+		</package>
+	
+	
+	
+	
+	
+	
+	</struts>
